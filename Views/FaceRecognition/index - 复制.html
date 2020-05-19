@@ -1,0 +1,178 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>人脸识别展示</title>
+    <link href="css/index.css" rel="stylesheet" type="text/css">
+    <script src="js/frame/bootstrap.js"></script>
+    <script src="js/frame/jquery.js"></script>
+    <!--引入echart.js-->
+    <script src="js/frame/echarts.js"></script>
+    <script src="js/frame/china.js"></script>
+    <script src="js/frame/shanxi.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=TGLi0O1I24CnrQHBkpedwcDgk4t9SNb2"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+</head>
+
+<body  style="background:url(images/backGround.png) no-repeat top left;width:100%;height:100%;background-size: cover">
+
+    <!-- -------------摇奖排行榜---------------  -->
+
+    <div class="Top_Record">
+
+        <div class="record_Top">
+            <div class="Main_Top">
+                <p id='title'>实时信息</p>
+                <div id="time"></div>
+            </div>
+
+        </div>
+        <br /><br /><br /><br />
+        <br /><br /><br /><br />
+        <br /><br /><br /><br />
+        <div class="record_Top">
+            <img style="width:300px;height:300px;border-radius:50%;" src="http://b.hiphotos.baidu.com/image/pic/item/b999a9014c086e069cd7964b00087bf40ad1cbb7.jpg" />
+        </div>
+
+        <br /><br /><br /><br />
+        <br /><br /><br /><br />
+        <div class="record_Top" style="font-size:30px;color:blue">
+            已通过！
+        </div>
+
+
+        <!--
+        <div class="topRec_List">
+
+            <dl>
+                <dd>序号</dd>
+                <dd>人脸图片</dd>
+                <dd>抓拍时间</dd>
+                <dd>抓拍地点</dd>
+                <dd>抓拍性质</dd>
+            </dl>
+
+            <div id='app' class="maquee">
+
+    -->
+        <!-- <ul onmouseover="HoverStop()" onmouseout="HoveroutBegin()"> -->
+        <!--   <ul height="300">
+            <li v-for='(item,index) in Items' :class="item.level">
+                <div>{{item.ID}}</div>
+                <div><img src="images/供水量.png" alt="Smiley face"></div>
+                <div>{{item.Time}}</div>
+                <div>{{item.Port}}</div>
+                <div :class="item.fontColor">{{item.State}}</div>
+            </li>
+        </ul>
+
+    </div>
+    </div>
+        -->
+    </div>
+
+        <script src="./js/vue.js"></script>
+        <script type="text/javascript">
+            var setVal;
+            function autoScroll(obj) {
+
+                $(obj).find("ul").animate({
+
+                    marginTop: "-6rem"
+
+                }, 500, function () {
+
+                    $(this).css({ marginTop: "0px" }).find("li:first").appendTo(this);
+
+                })
+            }
+
+            function HoverStop() {
+                clearInterval(setVal);
+            }
+
+            function HoveroutBegin() {
+                setVal = setInterval('autoScroll(".maquee")', 5000);
+            }
+
+            var comList = [];
+            var maxID = 0;
+            function initData() {
+                $.ajax({
+                    type: "post",
+                    url: "/GWService.asmx/GetDataTableFromSQL",//调用数据库接口
+                    async: false,
+                    data: {
+                        sql: "select * from HJ_RECONGNIZE_RECORD order by id",    //SQL语句
+                        userName: "admin"
+                    },
+                    success: function (data) {
+                        $(data).find('shen').each(function () {
+                            if (maxID % 2 == 0) {
+                                comList.push({ level: "warnitem", ID: $(this).children('id').text(), Time: $(this).children('recognition_time').text(), Port: $(this).children('recognition_equip').text(), State: '员工', fontColor: "confirm" });
+                            } else {
+                                comList.push({ level: "saftitem", ID: $(this).children('id').text(), Time: $(this).children('recognition_time').text(), Port: $(this).children('recognition_equip').text(), State: '员工', fontColor: "confirm" });
+                            }
+                            maxID = parseInt($(this).children('id').text());
+
+                        })
+                    }
+                });
+            }
+
+            function pushData() {
+                $.ajax({
+                    type: "post",
+                    url: "/GWService.asmx/GetDataTableFromSQL",//调用数据库接口
+                    async: false,
+                    data: {
+                        sql: "select * from HJ_RECONGNIZE_RECORD where id >" + maxID,    //SQL语句
+                        userName: "admin"
+                    },
+                    success: function (data) {
+                        $(data).find('shen').each(function () {
+                            if (maxID % 2 == 0) {
+                                comList.push({ level: "warnitem", ID: $(this).children('id').text(), Time: $(this).children('record_no').text(), Port: $(this).children('recognition_time').text(), State: $(this).children('recognition_equip').text(), fontColor: "confirm" });
+                            } else {
+                                comList.push({ level: "saftitem", ID: $(this).children('id').text(), Time: $(this).children('record_no').text(), Port: $(this).children('recognition_time').text(), State: $(this).children('recognition_equip').text(), fontColor: "confirm" });
+                            }
+                            maxID = maxID + 1;
+                        })
+                    }
+                });
+            }
+            var vueData;
+            $(document).ready(function () {
+                var Time = document.getElementById('time');
+                setInterval(function () {
+                    var time = new Date();
+                    // 程序计时的月从0开始取值后+1
+                    var m = time.getMonth() + 1;
+                    var t = time.getFullYear() + "年" + m + "月"
+                        + time.getDate() + "日 " + time.getHours() + ":"
+                        + time.getMinutes() + ":" + time.getSeconds();
+                    Time.innerHTML = t;
+                    pushData();
+                    this.vueData._data.Items = comList;
+                }, 5000);
+
+                initData();
+                setVal = setInterval('autoScroll(".maquee")', 2000);
+
+                vueData = new Vue({
+                    el: '#app',
+                    data: {
+                        Items: []
+                    },
+                    mounted() {
+                        this.Items = comList;
+                    }
+                })
+            });
+
+        </script>
+</body>
+
+    </html>
