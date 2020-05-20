@@ -16,6 +16,12 @@ function getStatusBarHeight(height, ScreenHeight) {
         $(".md .statusbar").height(heightRate + "px");
     }
 }
+//响应App绑定函数-获取状态栏高度
+function setStatusBarHeight(height, ScreenHeight) {
+    
+    $(".md .statusbar").height(height + "px");
+    $(".view .views").height(ScreenHeight + "px");
+}
 
 function getAppStatusBarHeight() {
     if (typeof(myJavaFun) != "undefined") {

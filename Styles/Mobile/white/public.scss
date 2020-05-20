@@ -4,22 +4,22 @@ mixin：sass宏mixin
 @import '_mixin.scss';
 
 //全局字体颜色
-$allFontColor: #666;
+$allFontColor: white;
 
 // header头部属性
 $headerFontSize: 1.4rem;
-$headerBgc: #fff;
-$headerBoxShadow: rgba(0,0,0,0.2);
+$headerBgc: #000;
+$headerBoxShadow: #eee;
 
 // 全局背景色,字体颜色,内容背景颜色
-$situationBgc: #F2F3F5;
-$situationFontColor: #666;
-$situationContainerBgc: #fff;
-$situationBoxShadow: #eee;
+$situationBgc: #26292f;
+$situationFontColor: #fff;
+$situationContainerBgc: #09060e;
+$situationBoxShadow: #655c5c;
 
 //工具栏背景色
-$toolbarBgc: #000;
-$toolbarFontColor: #414141;
+$toolbarBgc: rgba(27, 22, 32, 0.5);
+$toolbarFontColor: white;
 $selectedColor: #FD971F;
 $toolbarBoxShadow: #eee;
 
@@ -39,8 +39,7 @@ $btnBackground: #2d8cf0;
 $btnFontColor: #DEF0F9;
 
 //统计栏属性
-
-$statsBgc: rgba(255,255,255,0.5);
+$statsBgc: rgba(9,6,14,0.5);
 $statsFontColor: #333;
 $statsBorderColor: #f0f4f7;
 $selectedColor: #FD971F;
@@ -51,6 +50,7 @@ $unclickedColor: #648EFF;
 $unclickedColor_a: #f6f6f6;
 $bzColor: #0ed1e6;
 $unclickBorderRadius: 6px;
+
 // 统一table样式
 $tableHeaderFontSize: 1rem;
 $tableHeaderFontColor: #666;
@@ -69,20 +69,15 @@ $inputBorderColor: #eee;
 $tabBackground: #cea16c;
 $tabFontColor: white;
 
-// popup弹框
-$popupBackground: rgba(255,255,255,0.5);
-
-
 
 // 首页配置按钮
-$homeConfigBtnBg: rgba(10, 10, 10, 0.3);
-$homeConfigIColor: #fff;
-$homeConfigBtnColor: #463d3d;
-
+$homeConfigBtnBg: rgba(139, 137, 137, 0.3);
+$homeConfigBtnColor: #c3bfcb;
+$homeConfigIconColor: white;
 $homeBtnBorderRadius: 15%;
 
 // popup弹框
-$popupBackground: #ffffff;
+$popupBackground: rgba(255,255,255,0.5);
 $popupContentBackground: white;
 $popupBackTitle: #666;
 $popupHeaderBoxShadow: rgba(0,0,0,0.20);
@@ -97,4 +92,3 @@ $titColor:rgb(173,173,173);
 $valueColor:rgb(69,158,241);
 $lineBg:rgb(234,234,234);
 $activeBg:rgb(62,124,251);
-
